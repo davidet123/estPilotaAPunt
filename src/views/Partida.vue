@@ -1,67 +1,70 @@
 <template>
-  <v-container>
+  <div :class="status === 200 ? 'contenedorPartida' : 'sinBorde'">
 
-    <v-row>
-      <v-col class="text-center mt-4">
-        <h3>MARCADOR PILOTA</h3>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="6" offset="3">
-        <v-row>
-          <v-col cols="2" class="text-center border-md" offset="2">
-            <h4>{{ marcador.equip_roig.jocs }}</h4>
-          </v-col>
-          <v-col cols="2" class="bg-red text-center border-md"
-          :class="treta === 'equip_roig' ? 'text-decoration-underline' : 'text-decoration-none'"
-          >
-            <h4>{{ puntsStr[marcador.equip_roig.punts] }}</h4>
-          </v-col>
-          <v-col cols="2" class="bg-blue text-center border-md"
-          :class="treta === 'equip_blau' ? 'text-decoration-underline' : 'text-decoration-none'"
-          >
-            <h4>{{ puntsStr[marcador.equip_blau.punts] }}</h4>
-          </v-col>
-          <v-col cols="2" class="text-center border-md">
-            <h4>{{ marcador.equip_blau.jocs }}</h4>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="1" offset="2" class="text-center">
-            <v-btn size="x-small" color="red"
-            @click="punto('equip_roig', 1)"
-            >+</v-btn>
-          </v-col>
-          <v-col cols="2" class="text-center">
-            <v-btn size="x-small" color="red"
-            @click="punto('equip_roig', -1)"
-            >-</v-btn>
-          </v-col>
-          <v-col cols="1" offset="2" class="text-center">
-            <v-btn size="x-small" color="blue"
-            @click="punto('equip_blau', 1)"
-            >+</v-btn>
-          </v-col>
-          <v-col cols="2" class="text-center">
-            <v-btn size="x-small" color="blue"
-            @click="punto('equip_blau', -1)"
-            >-</v-btn>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col class="text-center ma-0 pa-0 d-flex flex-column" cols="12">
-        <h5>Crono</h5>
-        <h5>{{ tiempoPartida }}</h5>
-      </v-col>
-      <v-col class="text-center d-flex align-center justify-center">
-        <v-btn color="success" size="x-small" @click="iniciarCrono">INICIAR</v-btn>
-        <v-btn color="error" size="x-small" @click="pararCrono">PARAR</v-btn>
-        <v-btn color="primary" size="x-small" @click="pausarCrono">PAUSAR</v-btn>
-      </v-col>
-    </v-row>
-  </v-container>
+    <v-container>
+  
+      <v-row>
+        <v-col class="text-center mt-4">
+          <h3>MARCADOR PILOTA</h3>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="6" offset="3">
+          <v-row>
+            <v-col cols="2" class="text-center border-md" offset="2">
+              <h4>{{ marcador.equip_roig.jocs }}</h4>
+            </v-col>
+            <v-col cols="2" class="bg-red text-center border-md"
+            :class="treta === 'equip_roig' ? 'text-decoration-underline' : 'text-decoration-none'"
+            >
+              <h4>{{ puntsStr[marcador.equip_roig.punts] }}</h4>
+            </v-col>
+            <v-col cols="2" class="bg-blue text-center border-md"
+            :class="treta === 'equip_blau' ? 'text-decoration-underline' : 'text-decoration-none'"
+            >
+              <h4>{{ puntsStr[marcador.equip_blau.punts] }}</h4>
+            </v-col>
+            <v-col cols="2" class="text-center border-md">
+              <h4>{{ marcador.equip_blau.jocs }}</h4>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="1" offset="2" class="text-center">
+              <v-btn size="x-small" color="red"
+              @click="punto('equip_roig', 1)"
+              >+</v-btn>
+            </v-col>
+            <v-col cols="2" class="text-center">
+              <v-btn size="x-small" color="red"
+              @click="punto('equip_roig', -1)"
+              >-</v-btn>
+            </v-col>
+            <v-col cols="1" offset="2" class="text-center">
+              <v-btn size="x-small" color="blue"
+              @click="punto('equip_blau', 1)"
+              >+</v-btn>
+            </v-col>
+            <v-col cols="2" class="text-center">
+              <v-btn size="x-small" color="blue"
+              @click="punto('equip_blau', -1)"
+              >-</v-btn>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col class="text-center ma-0 pa-0 d-flex flex-column" cols="12">
+          <h5>Crono</h5>
+          <h5>{{ tiempoPartida }}</h5>
+        </v-col>
+        <v-col class="text-center d-flex align-center justify-center">
+          <v-btn color="success" size="x-small" @click="iniciarCrono">INICIAR</v-btn>
+          <v-btn color="error" size="x-small" @click="pararCrono">PARAR</v-btn>
+          <v-btn color="primary" size="x-small" @click="pausarCrono">PAUSAR</v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script setup>
@@ -76,7 +79,7 @@ const vMixstore = usevMixStore()
 
 
 const { marcador, puntsStr, treta, estadisticas } = storeToRefs(marcadorStore) 
-const { tiempoPartida } = storeToRefs(vMixstore)
+const { tiempoPartida, status } = storeToRefs(vMixstore)
 
 const punto = (equipo, val) => {
   const ganador = marcador.value[equipo]
@@ -135,5 +138,12 @@ const pausarCrono = () => vMixstore.pausarCrono()
 </script>
 
 <style scoped>
+.contenedorPartida {
+  border: 1px solid red;
+}
+
+.sinborde {
+  border: none;
+}
 
 </style>

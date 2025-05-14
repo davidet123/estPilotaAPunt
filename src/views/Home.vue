@@ -22,8 +22,29 @@
       </v-col>
     </v-row>
     <v-row>
+      <v-col class="text-center" cols="6" offset="3">
+        <v-text-field
+          v-model="url"
+          label="Url vMix"
+        ></v-text-field>
+        <div v-if="errorTxt" class="text-red">
+          {{ errorTxt }}
+
+        </div>
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col class="text-center">
-        <v-btn color="primary" to="/partida" size="small">EMPEZAR PARTIDA</v-btn>
+        <div v-if="cargando" class="text-center">
+          <v-progress-circular
+            color="primary"
+            indeterminate
+          ></v-progress-circular>
+        </div>
+        <div v-else>
+
+          <v-btn color="primary" @click="empezarPartida()" size="small">EMPEZAR PARTIDA</v-btn>
+        </div>
         <!-- <ControlVmix :titulo="'TEST123'"/>
         <ControlVmix :titulo="'segundo'"/> -->
       </v-col>
@@ -41,16 +62,25 @@
 </template>
 
 <script setup>
-  import { useEstadisticasStore } from '@/stores/estadisticas';
+  import { useEstadisticasStore } from '@/stores/estadisticas'
+  import { usevMixStore } from '@/stores/vMix';
+  import { useMarcadorStore } from '@/stores/marcador';
   import ControlVmix from '@/components/ControlVmix.vue';
   import Jugador from '@/components/Jugador.vue';
   import NuevoJugador from '@/components/NuevoJugador.vue';
   import { storeToRefs } from 'pinia';
   import { computed, ref, watch } from 'vue';
+  import router from '@/router';
 
   const estadisticasStore = useEstadisticasStore()
+  const vMixStore = usevMixStore()
+  const marcadorStore = useMarcadorStore()
 
   const { equipos } = storeToRefs(estadisticasStore)
+
+  const { url, status, errorTxt, cargando } = storeToRefs(vMixStore)
+
+  const statusWatcher = computed(() => status.value)
 
   const dialog = ref(false)
 
@@ -80,11 +110,19 @@
     dialog.value = false
   }
 
-  watch(equipos.value, val => {
-    console.log(val)
-    estadisticasStore.guardarEquipos()
-  })
+  const empezarPartida = () => {
+    vMixStore.pingVmix()
+  }
 
+  watch(() => equipos.value, val => {
+    estadisticasStore.guardarEquipos()
+  },{deep:true})
+  watch(() => statusWatcher.value, (val) => {
+    marcadorStore.resetMarcador()
+    if(val === 200) router.push("/partida")
+  });
+
+  
   
 
 </script>

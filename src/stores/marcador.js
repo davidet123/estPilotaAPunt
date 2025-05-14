@@ -69,6 +69,19 @@ export const useMarcadorStore = defineStore('marcadorStore', {
       this.marcador = datosPartidaPilota.marcador
       this.partidaA = datosPartidaPilota.partidaA
       this.estadisticas = datosPartidaPilota.estadisticas
+    },
+    resetMarcador() {
+      this.marcador = {
+        equip_roig: {
+          punts: 0,
+          jocs: 0
+        },
+        equip_blau: {
+          punts: 0,
+          jocs: 0
+        }
+      }
+      this.guardarLocalStorage()
     }
   }
 })
