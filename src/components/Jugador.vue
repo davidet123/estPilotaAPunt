@@ -20,7 +20,7 @@
               @click="emit('editar', jugador)"
             >EDITAR</v-btn>
             <v-btn color="error" size="x-small" variant="flat"
-              @click="emit('eliminar', jugador)"
+              @click="emit('eliminar', {jugador, color})"
             >X</v-btn>
           </div>
 

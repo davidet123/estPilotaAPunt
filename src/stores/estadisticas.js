@@ -35,7 +35,21 @@ export const useEstadisticasStore = defineStore('estadisticasStore', {
       console.log(payload)
     },
     eliminarJugador(payload) {
-      console.log(payload)
+      // const equipo = this.equipos[payload.color]
+      // console.log(equipo)
+      this.equipos[payload.color] = this.equipos[payload.color].filter(e => e.id !== payload.jugador.id)
+        
+        // console.log(equipo)
+      },
+
+    guardarEquipos() {
+      localStorage.setItem("equiposPilota", JSON.stringify(this.equipos))
+    },
+    cargarEquipos() {
+      const equiposPilota = JSON.parse(localStorage.getItem('equiposPilota'))
+      if(!equiposPilota) return
+
+      this.equipos = equiposPilota
     }
     
   }

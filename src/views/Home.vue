@@ -46,7 +46,7 @@
   import Jugador from '@/components/Jugador.vue';
   import NuevoJugador from '@/components/NuevoJugador.vue';
   import { storeToRefs } from 'pinia';
-  import { computed, ref } from 'vue';
+  import { computed, ref, watch } from 'vue';
 
   const estadisticasStore = useEstadisticasStore()
 
@@ -75,9 +75,15 @@
   }
   const eliminarJugador = data => estadisticasStore.eliminarJugador(data)
   const aceptarEdicionJugador = data => {
+    datosJugador.value = null
     // estadisticasStore.editarJugador(data)
     dialog.value = false
   }
+
+  watch(equipos.value, val => {
+    console.log(val)
+    estadisticasStore.guardarEquipos()
+  })
 
   
 

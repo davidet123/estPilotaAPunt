@@ -4,11 +4,14 @@
 
 <script setup>
 
-import { useMarcadorStore } from './stores/marcador';
+import { useMarcadorStore } from './stores/marcador'
+import { useEstadisticasStore } from './stores/estadisticas'
 
 const marcadorStore = useMarcadorStore()
+const estadisticasStore = useEstadisticasStore()
 
 marcadorStore.cargarLocalStorage()
+estadisticasStore.cargarEquipos()
 // import {  onMounted, onBeforeMount } from "vue";
 
 // import { useAppStore } from "./store/app.js"
