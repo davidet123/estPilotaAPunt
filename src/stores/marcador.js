@@ -3,11 +3,11 @@ import { defineStore } from 'pinia'
 export const useMarcadorStore = defineStore('marcadorStore', {
   state: () => ({
     marcador: {
-      equip_roig: {
+      rojos: {
         punts: 0,
         jocs: 0
       },
-      equip_blau: {
+      blaus: {
         punts: 0,
         jocs: 0
       }
@@ -16,41 +16,56 @@ export const useMarcadorStore = defineStore('marcadorStore', {
     puntsStr: ["NET", "15", "30", "VAL"],
     test: "TEST123",
     estadisticas: {
-      equip_roig: {
+      rojos: {
         vals: {
-          treta: 0,
-          rest: 0
+          treta: {
+            conseguidos: 0,
+            totales: 0
+          },
+          rest: {
+            conseguidos: 0,
+            totales: 0
+          }
         }
       },
-      equip_blau: {
+      blaus: {
         vals: {
-          treta: 0,
-          rest: 0
+          treta: {
+            conseguidos: 0,
+            totales: 0
+          },
+          rest: {
+            conseguidos: 0,
+            totales: 0
+          }
         }
       },
     },
-    treta: 'equip_roig',
+    treta: 'rojos',
     crono: null,
     cronoStr: "00:00:00",
     inicioPartida: null
 
   }),
   actions: { 
+    setPArtidaA (val) {
+      this.partidaA = parseInt(val)
+    },
     cambioTreta() {
-      this.treta === 'equip_roig' ? this.treta = 'equip_blau' : this.treta = 'equip_roig'
+      this.treta === 'rojos' ? this.treta = 'blaus' : this.treta = 'rojos'
     },
     checkVals() {
-      const rojos = this.marcador.equip_roig.punts
-      const blaus = this.marcador.equip_blau.punts
+      const rojos = this.marcador.rojos.punts
+      const blaus = this.marcador.blaus.punts
 
-      const valsRoig = this.estadisticas.equip_roig.vals
-      const valsBlau = this.estadisticas.equip_blau.vals
+      const valsRoig = this.estadisticas.rojos.vals
+      const valsBlau = this.estadisticas.blaus.vals
 
       if(rojos == 3) {
-        this.treta === 'equip_roig' ? valsRoig.treta += 1 : valsRoig.rest += 1
+        this.treta === 'rojos' ? valsRoig.treta.totales += 1 : valsRoig.rest.totales += 1
       }
       if(blaus == 3) {
-        this.treta === 'equip_blau' ? valsBlau.treta += 1 : valsBlau.rest += 1
+        this.treta === 'blaus' ? valsBlau.treta.totales += 1 : valsBlau.rest.totales += 1
         console.log("val blau")
       }
     },
@@ -72,11 +87,11 @@ export const useMarcadorStore = defineStore('marcadorStore', {
     },
     resetMarcador() {
       this.marcador = {
-        equip_roig: {
+        rojos: {
           punts: 0,
           jocs: 0
         },
-        equip_blau: {
+        blaus: {
           punts: 0,
           jocs: 0
         }

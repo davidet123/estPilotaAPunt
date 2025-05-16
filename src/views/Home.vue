@@ -4,6 +4,32 @@
       <v-col cols="12" class="text-center"><h5>Crear nueva partida</h5></v-col>
     </v-row>
     <v-row>
+      <v-col cols="3">
+        <v-text-field
+          label="Fecha"
+          v-model="fecha"
+          density="compact"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="3">
+        <v-text-field
+          label="Lugar"
+          v-model="lugar"
+          density="compact"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="3">
+        <v-text-field
+          label="Partida a"
+          v-model="partidaA"
+          density="compact"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col class="text-center" cols="12">
+        <h4>Añadir jugadores</h4>
+      </v-col>
       <v-col cols="6" v-for="(equipo, key, index) in equipos" :key="index">
         <v-row v-for="jugador in equipo" :key="jugador.id">
           <v-col cols="12">
@@ -77,6 +103,7 @@
   const marcadorStore = useMarcadorStore()
 
   const { equipos } = storeToRefs(estadisticasStore)
+  const { partidaA } = storeToRefs(marcadorStore)
 
   const { url, status, errorTxt, cargando } = storeToRefs(vMixStore)
 
@@ -85,6 +112,11 @@
   const dialog = ref(false)
 
   const equipoElegido = ref(null)
+
+
+  const fecha = ref(null)
+  const lugar = ref(null)
+  
 
 
   const abrirDialog = equipo => {
@@ -111,7 +143,10 @@
   }
 
   const empezarPartida = () => {
-    vMixStore.pingVmix()
+    marcadorStore.setPArtidaA(partidaA.value)
+    marcadorStore.guardarLocalStorage()
+    router.push("/partida")
+    // vMixStore.pingVmix()
   }
 
   watch(() => equipos.value, val => {

@@ -30,12 +30,38 @@ export const usevMixStore = defineStore('vMixStore', {
 
     },
     async liveUpdate (nombre, capa, val) {
-        let dir = this.url +"API/?Function=SetText&Input=" + nombre + "&SelectedName=" + capa + ".Text&Value=" + val
-        const send = await axios.post(dir)
-          .catch(err => {
-            console.log("Error de conexión " + err)
-          })
-      },
+      let dir = this.url +"API/?Function=SetText&Input=" + nombre + "&SelectedName=" + capa + ".Text&Value=" + val
+      
+      console.log(dir)
+      // const send = await axios.post(dir)
+      //   .catch(err => {
+      //     console.log("Error de conexión " + err)
+      //   })
+    },
+    async goLive (nombre) {
+      let dir = this.url +"API/?Function=OverlayInput1&Input=" + nombre
+      console.log(dir)
+      // const send = await axios.post(dir)
+      //   .catch(err => {
+      //     console.log("Error de conexión " + err)
+      //   })
+    },
+    async overLayIn (nombre, numero) {
+      let dir = this.url +"API/?Function=OverlayInput"+ numero +"In&Input=" + nombre
+      console.log(dir)
+      // const send = await axios.post(dir)
+      //   .catch(err => {
+      //     console.log("Error de conexión " + err)
+      //   })
+    },
+    async overLayOut (nombre, numero) {
+      let dir = this.url +"API/?Function=OverlayInput"+ numero +"Out&Input=" + nombre
+      console.log(dir)
+      // const send = await axios.post(dir)
+      //   .catch(err => {
+      //     console.log("Error de conexión " + err)
+      //   })
+    },
     
     async iniciarCrono() {
       const nombre = "MARCADOR"

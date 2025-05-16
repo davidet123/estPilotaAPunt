@@ -10,7 +10,7 @@ import { useEstadisticasStore } from './stores/estadisticas'
 const marcadorStore = useMarcadorStore()
 const estadisticasStore = useEstadisticasStore()
 
-marcadorStore.cargarLocalStorage()
+// marcadorStore.cargarLocalStorage()
 estadisticasStore.cargarEquipos()
 // import {  onMounted, onBeforeMount } from "vue";
 
